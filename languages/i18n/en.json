@@ -733,7 +733,7 @@
 	"unicode-support-fail": "It appears that your browser does not support Unicode. It is required to edit pages, so your edit was not published.",
 	"yourdiff": "Differences",
 	"copyrightwarning": "Please note that all contributions to {{SITENAME}} are considered to be released under the $2 (see $1 for details).\nIf you do not want your writing to be edited mercilessly and redistributed at will, then do not submit it here.<br />\nYou are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource.\n<strong>Do not submit copyrighted work without permission!</strong>",
-	"copyrightwarning2": "Please note that all contributions to {{SITENAME}} may be edited, altered, or removed by other contributors.\nIf you do not want your writing to be edited mercilessly, then do not submit it here.<br />\nYou are also promising us that you wrote this yourself, or copied it from a public domain or similar free resource (see $1 for details).\n<strong>Do not submit copyrighted work without permission!</strong>",
+	"copyrightwarning2": "",
 	"editpage-head-copy-warn": "-",
 	"editpage-tos-summary": "-",
 	"editpage-cannot-use-custom-model": "The content model of this page cannot be changed.",
