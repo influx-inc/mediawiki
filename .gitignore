@@ -83,7 +83,7 @@ Thumbs.db
 /favicon.ico
 /static*
 /tags
-/.htaccess
+#/.htaccess
 /.htpasswd
 *.rej
 
