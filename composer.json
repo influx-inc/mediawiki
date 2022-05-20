@@ -176,7 +176,8 @@
 		"merge-plugin": {
 			"include": [
 				"composer.local.json",
-				"extensions/AWS/composer.json"
+				"extensions/AWS/composer.json",
+				"extensions/GoogleLogin/composer.json"
 			],
 			"merge-dev": false
 		}
