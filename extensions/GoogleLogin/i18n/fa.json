@@ -1,0 +1,16 @@
+{
+	"@metadata": {
+		"authors": [
+			"Alirezaaa",
+			"Reza1615",
+			"Jeeputer"
+		]
+	},
+	"googlelogin": "ورود با گوگل",
+	"googlelogin-manage-yes": "بله",
+	"googlelogin-manage-no": "خیر",
+	"googlelogin-manage-dismiss": "نپذیرفتن",
+	"googlelogin-username": "نام کاربری",
+	"googlelogin-prefs-status": "وضعیت واردشدن به‌وسیله گوگل:",
+	"googlelogin-alloweddomain-terminatebutton": "حذف"
+}
