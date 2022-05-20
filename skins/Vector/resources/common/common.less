@@ -1,0 +1,74 @@
+/**
+ * Common styles and components shared by both,
+ * Vector legacy and Vector modern.
+ */
+
+@import './variables.less';
+@import 'mediawiki.mixins.less';
+
+@media screen {
+	// Common styles
+	@import './normalize.less';
+	@import './typography.less';
+
+	// Components
+	@import './components/Indicators.less';
+	@import './components/SiteNotice.less';
+	@import './components/Menu.less';
+	@import './components/MenuTabs.less';
+	@import './components/TabWatchstarLink.less';
+	@import './components/MenuDropdown.less';
+	@import './components/MenuPortal.less';
+	@import './components/SearchBox.less';
+	@import './components/SidebarLogo.less';
+	@import './components/Footer.less';
+}
+
+@media print {
+	@import './print.less';
+}
+
+/* Customizations */
+@media screen {
+	html {
+		font-size: 17px;
+	}
+
+	/* Use sans serif fonts for headings */
+
+	body {
+		font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	}
+	.mw-body h1,
+	.mw-body-content h1,
+	.mw-body-content h2,
+	.vector-sticky-header-context-bar-primary {
+		font-family: inherit;
+	}
+
+	/* Standardize link colour */
+
+	a, a:visited, a.external, a.external:visited {
+		color: #3366bb;
+	}
+
+	h1, h2 {
+		border-bottom: solid 1px #bcc0c7;
+	}
+	h2 {
+		margin-bottom: 1rem;
+	}
+	.mw-body-content h2 {
+		margin-bottom: 1rem;
+	}
+
+	.mw-sidebar-action-content {
+		display: none;
+	}
+	.toc {
+		padding: 0.5rem 1rem !important;
+	}
+	.mw-content-ltr .tocnumber {
+		width: 1rem;
+	}
+}
