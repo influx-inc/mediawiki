@@ -1,19 +1,21 @@
-## Branches
+# Abandon hope, all ye who enter here...
 
-- `master` is a clone of the upstream master.
-- `influx` is a fork of master with our extensions installed, prepped for Heroku deployment.
+This a fork of the Mediawiki repo:
 
-We're using bleeding edge instead of the latest stable release (1.37.2) because the latest versions of PHP /composer broke compatibility with 1.37 🤪
+- `master` is an unmodified clone of the upstream master.
+- `influx` is the branch we deploy from - with the skin and extensions added plus some customizations for Heroku deployment.
 
-# Notes
+We're using bleeding edge instead of the latest stable release (1.37.2) because the latest versions of PHP/composer broke compatibility with 1.37 🤪
 
-- Heroku app name: `influx-wiki`
+## Notes
+
+- Deployed on Heroku app name: `influx-wiki`
 - Assets are stored in S3 bucket: `influx-wiki`
 - See `LocalSettings.php` for configuration.
 
 ## Installation
 
-Via Homebrew:
+On OSX via Homebrew:
 
     # PHP 8:
     brew tap shivammathur/php
@@ -49,3 +51,12 @@ Push the `influx` branch to Heroku `master`:
     git rebase
     git checkout influx
     git rebase master
+    
+To run database migrations:
+
+    php maintenance/update.php
+    
+I highly recommend testing this in a dev environment before attempting it on production.
+
+
+
