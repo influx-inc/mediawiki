@@ -1,10 +1,9 @@
 ## Branches
 
 - `master` is a clone of the upstream master.
-- `influx` is a fork of master with our extensions installed and prepped for Heroku deployment.
+- `influx` is a fork of master with our extensions installed, prepped for Heroku deployment.
 
-We're using bleeding edge instead of the latest stable release (1.37.2) because the latter is
-incompatible with the latest version of composer.
+We're using bleeding edge instead of the latest stable release (1.37.2) because the latest versions of PHP /composer broke compatibility with 1.37 🤪
 
 # Notes
 
