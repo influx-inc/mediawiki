@@ -45,7 +45,7 @@ Push the `influx` branch to Heroku `master`:
 
 **In theory**, this should be a simple as fetching upstream commits to master and rebasing the Influx branch.
 
-  git checkout master
-  git rebase
-  git checkout influx
-  git rebase master
+    git checkout master
+    git rebase
+    git checkout influx
+    git rebase master
