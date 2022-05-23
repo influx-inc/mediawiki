@@ -13,13 +13,15 @@ We're using bleeding edge instead of the latest stable release (1.37.2) because 
 
 On OSX via Homebrew:
 
+(Mysql installation will likely fail, see https://stackoverflow.com/questions/4359131/brew-install-mysql-on-macos)
+
     # PHP 8:
     brew tap shivammathur/php
     brew install shivammathur/php/php@8.0
     brew link --overwrite --force php@8.0
     brew install composer
 
-    # Mysql:
+    # Mysql 8.0.29 
     brew install mysql
 
     # Checkout the influx branch:
