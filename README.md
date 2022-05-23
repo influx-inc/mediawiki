@@ -1,4 +1,4 @@
-# Abandon hope, all ye who enter here...
+# 🔥 Abandon hope, all ye who enter here... 🔥
 
 This a fork of the Mediawiki repo:
 
