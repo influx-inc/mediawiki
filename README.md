@@ -3,15 +3,11 @@
 This a fork of the Mediawiki repo:
 
 - `master` is an unmodified clone of the upstream master.
-- `influx` is the branch we deploy from - with the skin and extensions added plus some customizations for Heroku deployment.
+- `influx` is the branch we deploy from: with skin and extensions, plus some customizations for Heroku deployment.
+
+Note this repo is public! (make sure you don't commit any secrets).
 
 We're using bleeding edge instead of the latest stable release (1.37.2) because the latest versions of PHP/composer broke compatibility with 1.37 🤪
-
-## Notes
-
-- Deployed on Heroku app name: `influx-wiki`
-- Assets are stored in S3 bucket: `influx-wiki`
-- See `LocalSettings.php` for configuration.
 
 ## Installation
 
@@ -33,6 +29,8 @@ On OSX via Homebrew:
 
     # Install PHP dependencies:
     compose install --no-dev
+    
+See `LocalSettings.php` for configuration.
 
 ## Deploy
 
@@ -41,7 +39,6 @@ On OSX via Homebrew:
 Push the `influx` branch to Heroku `master`:
 
     git push heroku influx:master
-
 
 ## Upgrade
 
@@ -57,6 +54,7 @@ To run database migrations:
     php maintenance/update.php
     
 I highly recommend testing this in a dev environment before attempting it on production.
+
 
 
 
