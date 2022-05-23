@@ -69,6 +69,8 @@ $wgSharedTables[] = "actor";
 $wgMainCacheType = CACHE_ACCEL;
 $wgMemCachedServers = [];
 
+$wgSessionCacheType = CACHE_DB;
+
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
 $wgEnableUploads = true;
