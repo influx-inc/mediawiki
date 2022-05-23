@@ -80,7 +80,6 @@ Thumbs.db
 *.iml
 .metadata*
 .settings
-/favicon.ico
 /static*
 /tags
 #/.htaccess
