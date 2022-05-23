@@ -16,6 +16,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+$wgSiteNotice = "'''💡 The wiki has been upgraded!''' Editing is now enabled. Contact @markham if you need assistance or encounter a bug.";
+
 require_once('vendor/autoload.php');
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
