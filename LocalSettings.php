@@ -69,11 +69,34 @@ $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 # This has no effect unless $wgSharedDB is also set.
 $wgSharedTables[] = "actor";
 
-## Shared memory settings
-$wgMainCacheType = CACHE_NONE;
-$wgMemCachedServers = [];
 
-$wgSessionCacheType = CACHE_DB;
+# See https://www.mediawiki.org/wiki/Redis
+$redis = parse_url($_ENV["REDIS_URL"]);
+
+$wgObjectCaches['redis'] = [
+	'class'                => 'RedisBagOStuff',
+	'servers'              => [ $redis['host'] . ':' . $redis['port'] ]
+	// 'password'          	 => $redis['pass']
+	// 'connectTimeout'    => 1,
+	// 'persistent'        => false,
+	// 'automaticFailOver' => true,
+];
+$wgMainCacheType    = 'redis';
+$wgMainStash        = 'redis';
+$wgSessionCacheType = 'redis';
+
+$wgMessageCacheType = CACHE_NONE;
+
+# Via: https://www.mediawiki.org/wiki/User:Aaron_Schulz/How_to_make_MediaWiki_fast
+$wgJobRunRate = 0;
+$wgUseGzip = true;
+$wgEnableSidebarCache = true;
+$wgDisableCounters = true;
+$wgMiserMode = true;
+
+
+
+
 
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
