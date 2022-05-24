@@ -25,6 +25,8 @@ require_once('vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
+$wgShowSQLErrors = 1;
+
 $wgSitename = "Influx Wiki";
 $wgMetaNamespace = "Influx_Wiki";
 
