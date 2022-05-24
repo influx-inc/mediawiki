@@ -75,8 +75,8 @@ $redis = parse_url($_ENV["REDIS_URL"]);
 
 $wgObjectCaches['redis'] = [
 	'class'                => 'RedisBagOStuff',
-	'servers'              => [ $redis['host'] . ':' . $redis['port'] ]
-	// 'password'          	 => $redis['pass']
+	'servers'              => [ $redis['host'] . ':' . $redis['port'] ],
+	'password'          	 => $redis['pass']
 	// 'connectTimeout'    => 1,
 	// 'persistent'        => false,
 	// 'automaticFailOver' => true,
