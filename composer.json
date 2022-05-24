@@ -79,7 +79,8 @@
 		"wikimedia/wrappedstring": "4.0.1",
 		"wikimedia/xmp-reader": "0.8.1",
 		"zordius/lightncandy": "1.2.6",
-		"vlucas/phpdotenv": "^5.4"
+		"vlucas/phpdotenv": "^5.4",
+		"sentry/sdk": "^3.2"
 	},
 	"require-dev": {
 		"ext-simplexml": "*",

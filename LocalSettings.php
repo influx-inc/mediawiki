@@ -16,6 +16,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+\Sentry\init(['dsn' => 'https://d5310fdaa0fb42ab828a5119867ce92b@o70228.ingest.sentry.io/6434977' ]);
+
 $wgSiteNotice = "'''💡 The wiki has been upgraded!''' Editing is now enabled. Contact @markham if you need assistance or encounter a bug.";
 
 require_once('vendor/autoload.php');
