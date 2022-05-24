@@ -69,7 +69,7 @@ $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 # This has no effect unless $wgSharedDB is also set.
 $wgSharedTables[] = "actor";
 
-
+/*
 # See https://www.mediawiki.org/wiki/Redis
 $redis = parse_url($_ENV["REDIS_URL"]);
 
@@ -80,7 +80,9 @@ $wgObjectCaches['redis'] = [
 $wgMainCacheType    = 'redis';
 $wgMainStash        = 'redis';
 $wgSessionCacheType = 'redis';
+*/
 
+$wgMainCacheType    = CACHE_DB;
 $wgMessageCacheType = CACHE_NONE;
 
 # Via: https://www.mediawiki.org/wiki/User:Aaron_Schulz/How_to_make_MediaWiki_fast
