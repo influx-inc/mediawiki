@@ -50,7 +50,6 @@ $wgEnotifWatchlist = false; # UPO
 $wgEmailAuthentication = true;
 
 ## Database settings
-
 $parts = parse_url($_ENV["CLEARDB_DATABASE_URL"]);
 
 $wgDBtype     = "mysql";
@@ -69,21 +68,12 @@ $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 # This has no effect unless $wgSharedDB is also set.
 $wgSharedTables[] = "actor";
 
-/*
-# See https://www.mediawiki.org/wiki/Redis
-$redis = parse_url($_ENV["REDIS_URL"]);
-
-$wgObjectCaches['redis'] = [
-	'class'                => 'RedisBagOStuff',
-	'servers'              => [ $_ENV["REDIS_URL"] ]
-];
-$wgMainCacheType    = 'redis';
-$wgMainStash        = 'redis';
-$wgSessionCacheType = 'redis';
-*/
-
-$wgMainCacheType    = CACHE_DB;
-$wgMessageCacheType = CACHE_NONE;
+# See https://www.mediawiki.org/wiki/Manual:Memcached
+$wgMemCachedServers = [ "127.0.0.1:11211" ];
+$wgMainCacheType    = CACHE_MEMCACHED;
+$wgParserCacheType  = CACHE_MEMCACHED;
+$wgMessageCacheType = CACHE_MEMCACHED;
+$wgSessionCacheType = CACHE_MEMCACHED;
 
 # Via: https://www.mediawiki.org/wiki/User:Aaron_Schulz/How_to_make_MediaWiki_fast
 $wgJobRunRate = 0;
