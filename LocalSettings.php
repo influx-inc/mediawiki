@@ -36,6 +36,29 @@ $wgArticlePath = "/wiki/$1";
 ## The protocol and server name to use in fully-qualified URLs
 $wgServer = $_ENV["SITE_URL"];
 
+#
+# Caching
+#
+## Set $wgCacheDirectory to a writable directory on the web server
+## to make your wiki go slightly faster. The directory should not
+## be publicly accessible from the web.
+$wgCacheDirectory = "$IP/cache";
+
+# See https://www.mediawiki.org/wiki/Manual:Memcached
+$wgMemCachedServers = [ "127.0.0.1:11211" ];
+$wgMainCacheType    = CACHE_MEMCACHED;
+$wgParserCacheType  = CACHE_MEMCACHED;
+$wgMessageCacheType = CACHE_MEMCACHED;
+$wgSessionCacheType = CACHE_MEMCACHED;
+
+# Via: https://www.mediawiki.org/wiki/User:Aaron_Schulz/How_to_make_MediaWiki_fast
+$wgJobRunRate = 0;
+$wgUseGzip = true;
+$wgEnableSidebarCache = true;
+$wgDisableCounters = true;
+$wgMiserMode = true;
+
+
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
 
@@ -68,25 +91,11 @@ $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
 # This has no effect unless $wgSharedDB is also set.
 $wgSharedTables[] = "actor";
 
-# See https://www.mediawiki.org/wiki/Manual:Memcached
-$wgMemCachedServers = [ "127.0.0.1:11211" ];
-$wgMainCacheType    = CACHE_MEMCACHED;
-$wgParserCacheType  = CACHE_MEMCACHED;
-$wgMessageCacheType = CACHE_MEMCACHED;
-$wgSessionCacheType = CACHE_MEMCACHED;
-
-# Via: https://www.mediawiki.org/wiki/User:Aaron_Schulz/How_to_make_MediaWiki_fast
-$wgJobRunRate = 0;
-$wgUseGzip = true;
-$wgEnableSidebarCache = true;
-$wgDisableCounters = true;
-$wgMiserMode = true;
-
 ## To enable image uploads, make sure the 'images' directory
 ## is writable, then set this to true:
 $wgEnableUploads = true;
-#$wgUseImageMagick = true;
-#$wgImageMagickConvertCommand = "/usr/bin/convert";
+$wgUseImageMagick = true;
+$wgImageMagickConvertCommand = "/usr/bin/convert";
 
 # InstantCommons allows wiki to use images from https://commons.wikimedia.org
 $wgUseInstantCommons = false;
@@ -111,11 +120,6 @@ $wgLanguageCode = "en";
 $wgLocaltimezone = "UTC";
 
 $wgMaxCredits = 1;
-
-## Set $wgCacheDirectory to a writable directory on the web server
-## to make your wiki go slightly faster. The directory should not
-## be publicly accessible from the web.
-$wgCacheDirectory = "$IP/cache";
 
 $wgSecretKey = $_ENV['MEDIAWIKI_SECRET_KEY'];
 
@@ -221,20 +225,3 @@ $wgTinyMCESettings = array(
 		"toolbar" => "| wikilink wikiunlink | h1 h2 h3 | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist advlist outdent indent |table image media | wikimagic wikisourcecode wikitext wikiupload | wikitoggle reference template"
 	)
 );
-
-
-//
-//  S3 Image Storage
-//
-wfLoadExtension( 'AWS' );
-
-$wgAWSCredentials = [
-	'key'    => $_ENV['AWS_ACCESS_KEY_ID'],
-	'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
-	'token'  => false
-];
-$wgAWSRegion = 'us-east-1';
-$wgAWSBucketName = "influx-wiki";
-$wgAWSBucketTopSubdirectory="/";
-$wgAWSRepoHashLevels = '2';
-$wgAWSRepoDeletedHashLevels = '3';
