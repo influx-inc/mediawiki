@@ -50,7 +50,7 @@ $wgEnotifWatchlist = false; # UPO
 $wgEmailAuthentication = true;
 
 ## Database settings
-$parts = parse_url($_ENV["CLEARDB_DATABASE_URL"]);
+$parts = parse_url($_ENV["DATABASE_URL"]);
 
 $wgDBtype     = "mysql";
 $wgDBserver   = $parts['host'];
@@ -115,7 +115,7 @@ $wgMaxCredits = 1;
 ## Set $wgCacheDirectory to a writable directory on the web server
 ## to make your wiki go slightly faster. The directory should not
 ## be publicly accessible from the web.
-$wgCacheDirectory = false;
+$wgCacheDirectory = "$IP/cache";
 
 $wgSecretKey = $_ENV['MEDIAWIKI_SECRET_KEY'];
 
