@@ -14,7 +14,8 @@ $(function(){
       email: email
     }
     let headers = {
-      'Authorization': 'c8a5cadf7c6c9a03fb7069ec98b466e08db1e52d'
+      'Authorization': 'c8a5cadf7c6c9a03fb7069ec98b466e08db1e52d',
+      'Content-type':  'application/json'
     }
     fetch(visitURL, { method: "POST", mode: "cors", headers: headers, body: JSON.stringify(payload) })
   }
