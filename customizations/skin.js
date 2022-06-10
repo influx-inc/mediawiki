@@ -9,9 +9,10 @@ $(function(){
 
   function injectEvent(email) {
     let payload = {
-      url:   window.location.href,
-      page:  mw.config.values.wgPageName,
-      email: email
+      url:      window.location.href,
+      referrer: document.referrer,
+      page:     mw.config.values.wgPageName,
+      email:    email
     }
     let headers = {
       'Authorization': 'c8a5cadf7c6c9a03fb7069ec98b466e08db1e52d',
