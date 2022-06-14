@@ -16,8 +16,6 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
-\Sentry\init(['dsn' => 'https://d5310fdaa0fb42ab828a5119867ce92b@o70228.ingest.sentry.io/6434977' ]);
-
 require_once('vendor/autoload.php');
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -43,6 +41,7 @@ $wgServer = $_ENV["SITE_URL"];
 $wgCacheDirectory = "$IP/cache";
 
 # See https://www.mediawiki.org/wiki/Manual:Memcached
+
 $wgMemCachedServers = [ "127.0.0.1:11211" ];
 $wgMainCacheType    = CACHE_MEMCACHED;
 $wgParserCacheType  = CACHE_MEMCACHED;
@@ -154,6 +153,9 @@ $wgLogos = [
 	],
 ];
 
+
+\Sentry\init(['dsn' => 'https://d5310fdaa0fb42ab828a5119867ce92b@o70228.ingest.sentry.io/6434977' ]);
+
 //
 //  Add custom CSS + JS under /customizations
 //
@@ -163,10 +165,15 @@ $wgResourceModules['zzz.customizations'] = array(
 	'localBasePath'  => "$IP/customizations/",
 	'remoteBasePath' => "$wgScriptPath/customizations/"
 );
-function efCustomBeforePageDisplay( &$out, &$skin ) {
+function onCustomBeforePageDisplay( &$out, &$skin ) {
 	$out->addModules( array( 'zzz.customizations' ) );
+
+	// Add Sentry JS
+	$script = '<script src="https://js.sentry-cdn.com/d5310fdaa0fb42ab828a5119867ce92b.min.js" crossorigin="anonymous"></script>';
+	$out->addHeadItem("Sentry", $script);
+	return true;
 }
-$wgHooks['BeforePageDisplay'][] = 'efCustomBeforePageDisplay';
+$wgHooks['BeforePageDisplay'][] = 'onCustomBeforePageDisplay';
 
 
 # ---------
@@ -176,6 +183,16 @@ $wgDevelopmentWarnings = false;
 $wgShowExceptionDetails = true;
 $wgDeprecationReleaseLimit = '1.0';
 $wgFooterIcons = [];
+
+#
+# Elasticsearch
+#
+wfLoadExtension( 'Elastica' );
+wfLoadExtension( 'CirrusSearch' );
+
+$wgDisableSearchUpdate = true;
+
+# $wgSearchType = 'CirrusSearch';
 
 #
 # Google Login (https://www.mediawiki.org/wiki/Extension:GoogleLogin)

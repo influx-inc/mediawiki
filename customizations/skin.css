@@ -1,0 +1,6 @@
+.wvui-typeahead-suggestion__title {
+  font-weight: normal !important;
+}
+.wvui-typeahead-suggestion__match {
+  font-weight: bold !important;
+}
