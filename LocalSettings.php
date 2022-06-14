@@ -190,9 +190,21 @@ $wgFooterIcons = [];
 wfLoadExtension( 'Elastica' );
 wfLoadExtension( 'CirrusSearch' );
 
-$wgDisableSearchUpdate = true;
+$wgDisableSearchUpdate = false;
 
-# $wgSearchType = 'CirrusSearch';
+$wgSearchType = 'CirrusSearch';
+
+$wgCirrusSearchUseCompletionSuggester = 'yes';
+$wgCirrusSearchCompletionSettings = 'fuzzy-subphrases';
+$wgCirrusSearchPhraseSuggestProfiles = 'default';
+$wgCirrusSearchCompletionSuggesterSubphrases = [
+
+   'build' => true,
+   'use' => true,
+   'type' => 'anywords',
+   'limit' => 10,
+];
+$wgCirrusSearchCompletionSuggesterUseDefaultSort = true;
 
 #
 # Google Login (https://www.mediawiki.org/wiki/Extension:GoogleLogin)

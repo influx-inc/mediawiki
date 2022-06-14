@@ -179,7 +179,9 @@
 			"include": [
 				"composer.local.json",
 				"extensions/AWS/composer.json",
-				"extensions/GoogleLogin/composer.json"
+				"extensions/GoogleLogin/composer.json",
+				"extensions/CirrusSearch/composer.json",
+				"extensions/Elastica/composer.json"
 			],
 			"merge-dev": false
 		}
