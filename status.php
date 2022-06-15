@@ -21,13 +21,23 @@ if ( file_get_contents("http://localhost:9200/_cluster/health") ) {
   echo "Elasticsearch OK\n";
 }
 
-echo "\n";
 
-$meminfo = file_get_contents("/proc/meminfo");
-
-if ( $meminfo ) {
-  $lines = explode("\n", $meminfo);
-  echo join("\n", array_slice($lines, 0, 3));
+function getSystemMemInfo()
+{
+    $data = explode("\n", file_get_contents("/proc/meminfo"));
+    $meminfo = array();
+    foreach ($data as $line) {
+        @list($key, $val) = explode(":", $line);
+        $meminfo[$key] = trim($val);
+    }
+    return $meminfo;
 }
 
+$info = getSystemMemInfo();
+
+$available = intval(intval($info['MemAvailable']) / 1024);
+
+$status = ( $available > 200 ) ? "OK" : "warning";
+
+echo "System mem $status ($available MB available)";
 echo "\n";
