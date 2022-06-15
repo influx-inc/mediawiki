@@ -1,6 +1,10 @@
 <?php
+require_once('vendor/autoload.php');
 
-if ( @$_SERVER['HTTP_X_AUTHORIZATION'] != "blarg" ) {
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
+if ( @$_SERVER['HTTP_X_AUTHORIZATION'] != $_ENV["STATUS_TOKEN"] ) {
   header('HTTP/1.0 403 Forbidden');
   return;
 }
