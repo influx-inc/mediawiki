@@ -27,12 +27,22 @@ $(function(){
       })
   }
 
+  function getVisitID() {
+    let vid = localStorage.getItem("VisitID")
+    if ( !vid ) {
+      vid = Math.random().toString(36).slice(2)
+      localStorage.setItem("VisitID", vid)
+    }
+    return vid
+  }
+
   function injectEvent(email) {
     let payload = {
       url:         window.location.href,
       referrer:    document.referrer,
       page:        mw.config.values.wgPageName,
-      email:       email
+      email:       email,
+      vid:         getVisitID()
     }
     console.log('injectEvent', payload)
 
