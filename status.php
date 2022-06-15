@@ -14,12 +14,20 @@ header('Content-type: text/plain');
 $memcached = new Memcached();
 $memcached->addServer("localhost", 11211);
 if ( $memcached->getStats() ) {
-  echo "OK Memcached \n";
+  echo "Memcached OK\n";
 }
 
 if ( file_get_contents("http://localhost:9200/_cluster/health") ) {
-  echo "OK Elasticsearch\n";
+  echo "Elasticsearch OK\n";
 }
 
 echo "\n";
-echo file_get_contents("/proc/meminfo");
+
+$meminfo = file_get_contents("/proc/meminfo");
+
+if ( $meminfo ) {
+  $lines = explode("\n", $meminfo);
+  echo join("\n", array_slice($lines, 0, 3));
+}
+
+echo "\n";
