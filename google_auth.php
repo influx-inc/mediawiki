@@ -4,6 +4,10 @@
 #
 require_once 'vendor/autoload.php';
 
+if ( !isset($_POST['token']) ) {
+  exit;
+}
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
