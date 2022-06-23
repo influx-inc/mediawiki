@@ -153,9 +153,6 @@ $wgLogos = [
 	],
 ];
 
-
-\Sentry\init(['dsn' => 'https://d5310fdaa0fb42ab828a5119867ce92b@o70228.ingest.sentry.io/6434977' ]);
-
 //
 //  Add custom CSS + JS under /customizations
 //
@@ -165,14 +162,56 @@ $wgResourceModules['zzz.customizations'] = array(
 	'localBasePath'  => "$IP/customizations/",
 	'remoteBasePath' => "$wgScriptPath/customizations/"
 );
+
 function onCustomBeforePageDisplay( &$out, &$skin ) {
 	$out->addModules( array( 'zzz.customizations' ) );
 
+	// Add Google Sign-in JS + metatag
+
+	$out->addHeadItem('GoogleJS', '<script src="https://apis.google.com/js/platform.js" async defer></script>');
+	$out->addHeadItem('GoogleMeta', '<meta name="google-signin-client_id" content="161144458162-u7cvk85nv7ai0fj0jpgqhqg1l06tu9bg.apps.googleusercontent.com" />');
+
+	$js = <<<END
+	<script>
+	function onSignIn(user) {
+		const profile = user.getBasicProfile();
+		const email   = profile.getEmail()
+		const token   = user.getAuthResponse().id_token
+
+		console.log('Google sign in as', email)
+
+		fetch("/google_auth", {
+			method: "POST",
+			headers: { 'Content-type':  'application/x-www-form-urlencoded' },
+			body: "token=" + token
+		})
+		.then(response => {
+			localStorage.setItem("UserEmail", email)
+
+			if ( window.location.pathname == "/" ) {
+				window.location.pathname = "/wiki"
+			} else {
+				window.location.reload()
+			}
+		})
+	}
+	</script>
+END;
+
+	$out->addHeadItem("onSignInFunc", $js);
+
+	// Add the sign in button
+	if ( !isset($_COOKIE["google_auth_token"])) {
+		$out->prependHTML('<div class="g-signin2" data-onsuccess="onSignIn"></div>');
+	}
+
 	// Add Sentry JS
-	$script = '<script src="https://js.sentry-cdn.com/d5310fdaa0fb42ab828a5119867ce92b.min.js" crossorigin="anonymous"></script>';
-	$out->addHeadItem("Sentry", $script);
+	$out->addHeadItem("Sentry", '<script src="https://js.sentry-cdn.com/d5310fdaa0fb42ab828a5119867ce92b.min.js" crossorigin="anonymous"></script>');
+
 	return true;
+
 }
+
 $wgHooks['BeforePageDisplay'][] = 'onCustomBeforePageDisplay';
 
 
@@ -209,34 +248,70 @@ $wgCirrusSearchCompletionSuggesterUseDefaultSort = true;
 #
 # Google Login (https://www.mediawiki.org/wiki/Extension:GoogleLogin)
 #
-wfLoadExtension( 'GoogleLogin' );
+# wfLoadExtension( 'GoogleLogin' );
+#
+# $wgGroupPermissions['*']['read'] = false;
+# $wgGroupPermissions['*']['autocreateaccount'] = true;
+# $wgWhitelistRead = array( 'Special:GoogleLogin', 'Special:GoogleLoginReturn' );
+#
+# $wgGLSecret = $_ENV['GOOGLE_LOGIN_SECRET'];
+# $wgGLAppId  = $_ENV['GOOGLE_LOGIN_APP_ID'];
+#
+# $wgGLForceKeepLogin = true;
+# $wgGLReplaceMWLogin = false;
+# $wgGLAllowedDomains = array('influx.com', 'influx.support', 'influxapprentice.com');
+#
+# $wgGroupPermissions['*']['autocreateaccount'] = true;
+# $wgGLAuthoritativeMode = true;
+# $wgInvalidUsernameCharacters = ':~';
+# $wgUserrightsInterwikiDelimiter = '~';
+#
+# $wgAuthManagerConfig = [
+# 	'primaryauth' => [
+# 			GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class => [
+# 					'class' => GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class,
+# 					'sort' => 0
+# 			]
+# 	],
+# 	'preauth' => [],
+# 	'secondaryauth' => []
+# ];
 
+// The extension lets us bypass Mediawiki authentication system and
+// just tell it who the signed in user is ($wgAuthRemoteuserUserName)
+
+wfLoadExtension( 'Auth_remoteuser' );
+//
+// Validate the google_auth_token_cookie set by google_auth.php
+//
+if ( isset($_COOKIE["google_auth_token"]) ) {
+
+	list($email, $time, $signature) = explode(':', $_COOKIE["google_auth_token"]);
+
+	$expected = sha1($email . $time . $_ENV["AUTH_TOKEN_SALT"]);
+
+	if ( $signature == $expected ) {
+		//
+		// Derive the username from the email "fred.bloggs@influx.com" -> "Fred Bloggs"
+		//
+		$username = explode('@', $email)[0];
+		$username = str_replace(".", " ", $username);
+		$username = ucwords($username);
+
+
+		// This signs the user in:
+		//
+		$wgAuthRemoteuserUserName = $username;
+	} else {
+		// Unset the cookie if invalid
+		setcookie("google_auth_token", "", time() - 3600);
+	}
+}
+
+# Users must sign in to read the wiki:
 $wgGroupPermissions['*']['read'] = false;
+$wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['autocreateaccount'] = true;
-$wgWhitelistRead = array( 'Special:GoogleLogin', 'Special:GoogleLoginReturn' );
-
-$wgGLSecret = $_ENV['GOOGLE_LOGIN_SECRET'];
-$wgGLAppId  = $_ENV['GOOGLE_LOGIN_APP_ID'];
-
-$wgGLForceKeepLogin = true;
-$wgGLReplaceMWLogin = false;
-$wgGLAllowedDomains = array('influx.com', 'influx.support', 'influxapprentice.com');
-
-$wgGroupPermissions['*']['autocreateaccount'] = true;
-$wgGLAuthoritativeMode = true;
-$wgInvalidUsernameCharacters = ':~';
-$wgUserrightsInterwikiDelimiter = '~';
-
-$wgAuthManagerConfig = [
-	'primaryauth' => [
-			GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class => [
-					'class' => GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class,
-					'sort' => 0
-			]
-	],
-	'preauth' => [],
-	'secondaryauth' => []
-];
 
 #
 #  TinyMCE

@@ -1,6 +1,4 @@
 $(function(){
-  // Note: Mediawiki has it's own minifier which doesn't understand modern javascript.
-
   // Log visits via the Visit Gem
   var visitURL = "https://people.influx.com/visit/inject_event";
 
@@ -44,7 +42,7 @@ $(function(){
       email:       email,
       vid:         getVisitID()
     }
-    console.log('injectEvent', payload)
+
 
     let headers = {
       'Authorization': 'c8a5cadf7c6c9a03fb7069ec98b466e08db1e52d',
@@ -60,4 +58,9 @@ $(function(){
   let $sidebarItems = $(".mw-sidebar-action-content")
   $sidebarItems.find("a[href^='/index.php?title=Special:Preferences']").remove()
   $sidebarItems.show()
+
+  // Hide the "Sign out" button.
+
+  $("a[href^='/index.php?title=Special:UserLogout']").remove()
+
 })
