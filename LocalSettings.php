@@ -248,38 +248,38 @@ $wgCirrusSearchCompletionSuggesterUseDefaultSort = true;
 #
 # Google Login (https://www.mediawiki.org/wiki/Extension:GoogleLogin)
 #
-# wfLoadExtension( 'GoogleLogin' );
-#
-# $wgGroupPermissions['*']['read'] = false;
-# $wgGroupPermissions['*']['autocreateaccount'] = true;
-# $wgWhitelistRead = array( 'Special:GoogleLogin', 'Special:GoogleLoginReturn' );
-#
-# $wgGLSecret = $_ENV['GOOGLE_LOGIN_SECRET'];
-# $wgGLAppId  = $_ENV['GOOGLE_LOGIN_APP_ID'];
-#
-# $wgGLForceKeepLogin = true;
-# $wgGLReplaceMWLogin = false;
-# $wgGLAllowedDomains = array('influx.com', 'influx.support', 'influxapprentice.com');
-#
-# $wgGroupPermissions['*']['autocreateaccount'] = true;
-# $wgGLAuthoritativeMode = true;
-# $wgInvalidUsernameCharacters = ':~';
-# $wgUserrightsInterwikiDelimiter = '~';
-#
-# $wgAuthManagerConfig = [
-# 	'primaryauth' => [
-# 			GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class => [
-# 					'class' => GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class,
-# 					'sort' => 0
-# 			]
-# 	],
-# 	'preauth' => [],
-# 	'secondaryauth' => []
-# ];
+wfLoadExtension( 'GoogleLogin' );
+
+$wgGroupPermissions['*']['read'] = false;
+$wgGroupPermissions['*']['autocreateaccount'] = true;
+$wgWhitelistRead = array( 'Special:GoogleLogin', 'Special:GoogleLoginReturn' );
+
+$wgGLSecret = $_ENV['GOOGLE_LOGIN_SECRET'];
+$wgGLAppId  = $_ENV['GOOGLE_LOGIN_APP_ID'];
+
+$wgGLForceKeepLogin = true;
+$wgGLReplaceMWLogin = false;
+$wgGLAllowedDomains = array('influx.com', 'influx.support', 'influxapprentice.com');
+
+$wgGroupPermissions['*']['autocreateaccount'] = true;
+$wgGLAuthoritativeMode = true;
+$wgInvalidUsernameCharacters = ':~';
+$wgUserrightsInterwikiDelimiter = '~';
+
+$wgAuthManagerConfig = [
+	'primaryauth' => [
+			GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class => [
+					'class' => GoogleLogin\Auth\GooglePrimaryAuthenticationProvider::class,
+					'sort' => 0
+			]
+	],
+	'preauth' => [],
+	'secondaryauth' => []
+];
 
 // The extension lets us bypass Mediawiki authentication system and
 // just tell it who the signed in user is ($wgAuthRemoteuserUserName)
-
+/*
 wfLoadExtension( 'Auth_remoteuser' );
 //
 // Validate the google_auth_token_cookie set by google_auth.php
@@ -312,7 +312,7 @@ if ( isset($_COOKIE["google_auth_token"]) ) {
 $wgGroupPermissions['*']['read'] = false;
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['autocreateaccount'] = true;
-
+*/
 #
 #  TinyMCE
 #
