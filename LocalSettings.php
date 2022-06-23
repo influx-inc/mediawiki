@@ -167,10 +167,10 @@ function onCustomBeforePageDisplay( &$out, &$skin ) {
 	$out->addModules( array( 'zzz.customizations' ) );
 
 	// Add Google Sign-in JS + metatag
-
+/*
 	$out->addHeadItem('GoogleJS', '<script src="https://apis.google.com/js/platform.js" async defer></script>');
 	$out->addHeadItem('GoogleMeta', '<meta name="google-signin-client_id" content="161144458162-u7cvk85nv7ai0fj0jpgqhqg1l06tu9bg.apps.googleusercontent.com" />');
-
+*/
 	$js = <<<END
 	<script>
 	function onSignIn(user) {
@@ -201,9 +201,11 @@ END;
 	$out->addHeadItem("onSignInFunc", $js);
 
 	// Add the sign in button
+	/*
 	if ( !isset($_COOKIE["google_auth_token"])) {
 		$out->prependHTML('<div class="g-signin2" data-onsuccess="onSignIn"></div>');
 	}
+	*/
 
 	// Add Sentry JS
 	$out->addHeadItem("Sentry", '<script src="https://js.sentry-cdn.com/d5310fdaa0fb42ab828a5119867ce92b.min.js" crossorigin="anonymous"></script>');
