@@ -20,7 +20,11 @@ On OSX via Homebrew:
     brew install shivammathur/php/php@8.0
     brew link --overwrite --force php@8.0
     brew install composer
-
+    
+    # PHP memcached extension
+    brew install libmemcached zlib
+    printf "$(brew --prefix libmemcached)\n$(brew --prefix zlib)\n" | pecl install memcached
+    
     # Mysql 8.0.29 
     brew install mysql
 
