@@ -30,7 +30,7 @@ On OSX via Homebrew:
     git checkout influx
 
     # Install PHP dependencies:
-    compose install --no-dev
+    composer install --no-dev
     
 See `LocalSettings.php` for configuration.
 
