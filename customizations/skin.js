@@ -2,10 +2,6 @@ $(function(){
   // Log visits via the Visit Gem
   var visitURL = "https://people.influx.com/visit/inject_event";
 
-  if ( window.location.host == 'localhost' ) {
-    visitURL = "http://localhost:3000/visit/inject_event";
-  }
-
   // For user attribution we fetch the current user's email from the Mediawiki API
   var mediawikiURL = "/api.php?action=query&meta=userinfo&uiprop=email&format=json";
 
@@ -42,7 +38,10 @@ $(function(){
       email:       email,
       vid:         getVisitID()
     }
-
+    if ( window.location.host == 'localhost' ) {
+      console.log("Visit payload", payload)
+      return
+    }
 
     let headers = {
       'Authorization': 'c8a5cadf7c6c9a03fb7069ec98b466e08db1e52d',
@@ -60,7 +59,6 @@ $(function(){
   $sidebarItems.show()
 
   // Hide the "Sign out" button.
-
   $("a[href^='/index.php?title=Special:UserLogout']").remove()
 
 })
