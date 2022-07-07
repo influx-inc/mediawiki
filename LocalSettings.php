@@ -210,43 +210,28 @@ function onCustomBeforePageDisplay( &$out, &$skin ) {
 	$out->addModules( array( 'zzz.customizations' ) );
 
 	// Add Google Sign-in JS + metatag
-	$out->addHeadItem('GoogleJS', '<script src="https://apis.google.com/js/platform.js" async defer></script>');
-	$out->addHeadItem('GoogleMeta', '<meta name="google-signin-client_id" content="161144458162-u7cvk85nv7ai0fj0jpgqhqg1l06tu9bg.apps.googleusercontent.com" />');
-
-	// Callback script for Google sign in.
-	// Needs to be injected into the page (must be available before DOMContentLoaded)
-
-	$script =<<<END
-	function onSignIn(user) {
-		const profile = user.getBasicProfile();
-		const email   = profile.getEmail()
-		const token   = user.getAuthResponse().id_token
-
-		fetch("/google_auth.php", {
-			method: "POST",
-			headers: { 'Content-type': 'application/x-www-form-urlencoded' },
-			body: "token=" + token
-		})
-		.then(response => {
-			if ( response.status != 200 ) return
-
-			localStorage.setItem("UserEmail", email)
-
-			if ( window.location.pathname == "/" ) {
-				window.location.pathname = "/wiki"
-			} else {
-				window.location.reload()
-			}
-		})
-	}
-END;
-
-	// Injecting a minified version of the above.
-	$out->addHeadItem("onSignInFunc", "<script>$script</script>");
+	$out->addHeadItem('GoogleJS', '<script src="https://accounts.google.com/gsi/client" async defer></script>');
 
 	// Add the sign in button if there is no signed-in user.
 	if ( !isset($_COOKIE["google_auth_token"])) {
-		$out->prependHTML('<div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>');
+		$host = $_ENV["SITE_URL"];
+		$button =<<<END
+		<div id="g_id_onload"
+			data-client_id="161144458162-u7cvk85nv7ai0fj0jpgqhqg1l06tu9bg.apps.googleusercontent.com"
+			data-auto_select="true"
+			data-login_uri="$host/google_auth.php">
+		</div>
+		<div class="g_id_signin"
+		data-type="standard"
+		data-size="large"
+		data-theme="outline"
+		data-text="sign_in_with"
+		data-shape="rectangular"
+		data-logo_alignment="left">
+		</div>
+END;
+
+		$out->prependHTML($button);
 	}
 
 	// Add Sentry JS

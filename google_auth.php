@@ -4,19 +4,20 @@
 #
 require_once 'vendor/autoload.php';
 
-if ( !isset($_POST['token']) ) {
+if ( !isset($_POST['credential']) ) {
   exit;
 }
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
+$token = $_POST['credential'];
 #
 # Verify the ID token returned by Google
 #
 $client  = new Google_Client(['client_id' => $_ENV['GOOGLE_LOGIN_APP_ID']]);
-$payload = $client->verifyIdToken($_POST['token']);
-$email   = $payload['email'];
+$payload = $client->verifyIdToken($token);
+$email   = $payload["email"];
 
 if ( !$payload ) {
   header("HTTP/1.1 401 Unauthorized");
@@ -45,3 +46,5 @@ if ( $_ENV["ENVIRONMENT"] == "production" ) {
 }
 
 setcookie('google_auth_token', $token, $options);
+
+header('Location: /wiki');
