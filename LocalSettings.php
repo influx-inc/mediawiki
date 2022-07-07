@@ -215,11 +215,14 @@ function onCustomBeforePageDisplay( &$out, &$skin ) {
 	// Add the sign in button if there is no signed-in user.
 	if ( !isset($_COOKIE["google_auth_token"])) {
 		$host = $_ENV["SITE_URL"];
+		$path = $_SERVER['REQUEST_URI'];
+
 		$button =<<<END
 		<div id="g_id_onload"
 			data-client_id="161144458162-u7cvk85nv7ai0fj0jpgqhqg1l06tu9bg.apps.googleusercontent.com"
 			data-auto_select="true"
-			data-login_uri="$host/google_auth.php">
+			data-login_uri="$host/google_auth.php"
+			data-request_path="$path">
 		</div>
 		<div class="g_id_signin"
 		data-type="standard"

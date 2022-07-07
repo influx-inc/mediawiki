@@ -47,4 +47,10 @@ if ( $_ENV["ENVIRONMENT"] == "production" ) {
 
 setcookie('google_auth_token', $token, $options);
 
-header('Location: /wiki');
+$redirectTo = "/wiki";
+
+if ( isset($_POST["request_path"]) ) {
+  $redirectTo = $_POST["request_path"];
+}
+
+header("Location: $redirectTo");
